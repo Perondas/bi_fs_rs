@@ -56,7 +56,7 @@ impl PBOHandle {
         let blob_start = handle.stream_position()?;
 
         let blob_size = i64::from(files.iter().map(|f| f.size).sum::<u32>());
-        handle.seek(SeekFrom::Current(blob_size + 1))?;
+        handle.seek(SeekFrom::Current(blob_size))?;
 
         // Get the checksum
         let checksum = Checksum::read(&mut handle)?;
