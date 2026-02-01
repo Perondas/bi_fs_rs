@@ -12,7 +12,9 @@ pub struct PBOHandle {
     pub files: Vec<BinaryHeader>,
     pub checksum: Checksum,
     pub handle: std::fs::File,
+    /// Index of the first byte of the blob
     pub blob_start: u64,
+    /// Total length of the PBO file
     pub length: u64,
 }
 
@@ -49,10 +51,11 @@ impl PBOHandle {
             files.push(header);
         }
 
-        // Skip past the blob + 1
+        // Skip past padding bit
+        handle.seek(SeekFrom::Current(1))?;
         let blob_start = handle.stream_position()?;
-        let blob_size = i64::from(files.iter().map(|f| f.size).sum::<u32>());
 
+        let blob_size = i64::from(files.iter().map(|f| f.size).sum::<u32>());
         handle.seek(SeekFrom::Current(blob_size + 1))?;
 
         // Get the checksum
