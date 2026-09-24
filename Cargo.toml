@@ -15,7 +15,7 @@ anyhow = "1.0.98"
 rsa = "0.9.10"
 sha1 = "0.11.0"
 binrw = "0.15.2"
-nutype = "0.7.0"
+nutype = "0.8.0"
 # Must stay on the same rand_core version as the rsa crate
 rand_core = { version = "0.6", features = ["getrandom"] }
 
